@@ -14,6 +14,12 @@ const checkDuplicateId = async (req, res, next) => {
 const checkIDValidation = (req, res, next) => {
   const { id } = req.body;
 
+  if(!id) {
+    return res.status(400).json({
+      message: "ID is required"
+    });
+  }
+
   if (!/^[0-9]+$/.test(id)) {
     return res.status(400).json({
       message: "ID must be numbers",

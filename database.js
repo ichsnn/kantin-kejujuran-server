@@ -8,7 +8,8 @@ const db = new Sequelize(
   dbconfig.password,
   {
     host: dbconfig.host,
-    dialect: dbconfig.dialect
+    dialect: dbconfig.dialect,
+    logging: false
   }
 );
 

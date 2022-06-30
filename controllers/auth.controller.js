@@ -14,13 +14,11 @@ const signup = (req, res) => {
     .then((user) => {
       res.status(201).json({
         message: "User created successfully",
-        user,
       });
     })
     .catch((err) => {
       res.status(500).json({
         message: err.message,
-        err,
       });
     });
 };

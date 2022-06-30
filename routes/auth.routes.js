@@ -14,7 +14,7 @@ authRoutes.use((req, res, next) => {
 
 authRoutes.post(
   "/signup",
-  [VerifyUser.checkDuplicateId, VerifyUser.checkIDValidation],
+  [VerifyUser.checkIDValidation, VerifyUser.checkDuplicateId],
   controller.signup
 );
 
