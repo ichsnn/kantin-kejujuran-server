@@ -1,0 +1,26 @@
+const express = require("express");
+const cors = require("cors");
+const database = require("./database");
+const routes = require("./routes");
+const port = process.env.PORT || 3500;
+
+const app = express();
+
+app.use(cors);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/api', routes);
+
+database
+  .sync({force: true})
+  .then(() => {
+    console.log("Database synced");
+  })
+  .catch((err) => {
+    console.log("Error syncing database");
+  });
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
