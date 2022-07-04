@@ -54,9 +54,47 @@ const checkIDValidation = (req, res, next) => {
   next();
 };
 
+const checkBalanceValidation = (req, res, next) => {
+  const { amount } = req.body;
+  if (!amount) {
+    return res.status(400).json({
+      message: "Amount is required",
+    });
+  }
+  if (!/^[0-9]+$/.test(amount)) {
+    return res.status(400).json({
+      message: "Amount must be numbers",
+    });
+  }
+  if (amount < 0) {
+    return res.status(400).json({
+      message: "Amount must be positive",
+    });
+  }
+  next();
+}
+
+const checkBalanceEnough = async (req, res, next) => {
+  const { amount } = req.body;
+  const id = req.userId;
+  const user = await User.findOne({
+    where: {
+      id,
+    },
+  });
+  if (user.balance < amount) {
+    return res.status(400).json({
+      message: "Balance is not enough",
+    });
+  }
+  next();
+}
+
 const VerifyUser = {
   checkDuplicateId,
-  checkIDValidation
+  checkIDValidation,
+  checkBalanceValidation,
+  checkBalanceEnough
 };
 
 module.exports = VerifyUser;

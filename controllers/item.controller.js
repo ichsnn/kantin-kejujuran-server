@@ -25,6 +25,17 @@ const sellItem = async (req, res) => {
   }
 };
 
+const buyItem = async (req, res) => {
+  const { item_id } = req.body;
+  const user_id = req.userId;
+  await Item.update({
+    user_id,
+    item_id,
+  });
+  res.status(200).json({ message: "Item successfully bought!" });
+
+}
+
 const onsell = async (req, res) => {
   const ItemsOnSell = await Item.findAll({
     where: {
@@ -60,4 +71,5 @@ module.exports = {
   sellItem,
   onsell,
   onsellPage,
+  buyItem
 };

@@ -1,15 +1,35 @@
-const User = require('./user.model');
-const Item = require('./item.model');
+const User = require("./user.model");
+const Item = require("./item.model");
+const ItemTranscation = require("./item-transaction.model.js");
+const BalanceTransaction = require("./balance-transcation.model");
 
+// one to many
+User.hasMany(Item, {
+  foreignKey: "user_id",
+  as: "items",
+});
+Item.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "user",
+});
 
-// one user can sell many items
-Item.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(Item, { foreignKey: 'user_id' });
+// create item transaction model
+ItemTranscation.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "user",
+}
+);
+ItemTranscation.belongsTo(Item, {
+  foreignKey: "item_id",
+  as: "item",
+});
 
-// one item can be sold by one users
-Item.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(Item, { foreignKey: 'user_id' });
+// create balance transaction model
+BalanceTransaction.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "user",
+});
 
-const models = {User, Item};
+const models = { User, Item, ItemTranscation, BalanceTransaction };
 
 module.exports = models;
