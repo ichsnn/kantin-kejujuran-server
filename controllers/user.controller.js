@@ -15,6 +15,7 @@ const userAuth = async (req, res) => {
   return res.json({
     id: user.id,
     name: user.name,
+    balance: user.balance
   });
 };
 
