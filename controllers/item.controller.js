@@ -1,4 +1,4 @@
-const { Item } = require("../models");
+const { Item, User, BalanceTransaction, ItemTranscation } = require("../models");
 
 const sellItem = async (req, res) => {
   try {
@@ -21,20 +21,74 @@ const sellItem = async (req, res) => {
     });
     res.status(201).json({ message: "Item successfully created!" });
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
 };
 
 const buyItem = async (req, res) => {
-  const { item_id } = req.body;
+  const { id } = req.body;
   const user_id = req.userId;
-  await Item.update({
-    user_id,
-    item_id,
+  // get item price
+  const item = await Item.findOne({
+    where: {
+      id,
+    },
   });
-  res.status(200).json({ message: "Item successfully bought!" });
+  const price = item.price;
+  // update item to sold
+  await Item.update(
+    {
+      sold: true,
+    },
+    {
+      where: {
+        id,
+      },
+    }
+  );
+  // add balance to seller
+  const seller = await User.findOne({
+    where: {
+      id: item.user_id,
+    },
+  });
+  const newSellerBalance = parseInt(seller.balance) + parseInt(price);
+  await User.update(
+    {
+      balance: newSellerBalance,
+    },
+    {
+      where: {
+        id: item.user_id,
+      },
+    }
+  );
 
-}
+  // update user balance
+  const user = await User.findOne({
+    where: {
+      id: user_id,
+    },
+  });
+  const newBalance = parseInt(user.balance) - parseInt(price);
+  await User.update(
+    {
+      balance: newBalance,
+    },
+    {
+      where: {
+        id: user_id,
+      },
+    }
+  );
+  // item transaction
+  await ItemTranscation.create({
+    item_id: id,
+    user_id,
+  });
+
+  res.status(200).json({ message: "Item successfully bought!" });
+};
 
 const onsell = async (req, res) => {
   const ItemsOnSell = await Item.findAll({
@@ -71,5 +125,5 @@ module.exports = {
   sellItem,
   onsell,
   onsellPage,
-  buyItem
+  buyItem,
 };

@@ -94,6 +94,7 @@ const VerifyUser = {
   checkDuplicateId,
   checkIDValidation,
   checkBalanceValidation,
+  checkBalanceEnough,
   checkBalanceEnough
 };
 
