@@ -37,6 +37,10 @@ const home = async (req, res) => {
   });
 };
 
+const addBalance = async (req, res) => {
+  const id = req.userId;
+}
+
 module.exports = {
   userAuth,
   home

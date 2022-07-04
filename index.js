@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", routes);
-app.use("/images", express.static(path.join(__dirname, "storage/images")));
+app.use("/storage/images", express.static(path.join(__dirname, "storage/images")));
 
 database
   .sync({ alter: true })
