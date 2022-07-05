@@ -105,7 +105,7 @@ Request body :
 
 ```json
 {
-  "id": item_id
+  "id": "item_id"
 }
 ```
 
