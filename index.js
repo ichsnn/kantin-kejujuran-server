@@ -18,7 +18,7 @@ app.use("/api", routes);
 app.use("/storage/images", express.static(path.join(__dirname, "storage/images")));
 
 database
-  .sync({ alter: true })
+  .sync({alter: true})
   .then(() => {
     console.log("Database synced");
   })
