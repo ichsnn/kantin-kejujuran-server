@@ -70,7 +70,7 @@ const verifyBalanceEnough = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    
+    return res.status(400).json({ error: true, message: "Item not found" });
   }
 }
 
