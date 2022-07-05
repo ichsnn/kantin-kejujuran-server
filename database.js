@@ -7,14 +7,19 @@ const db = new Sequelize(
   dbconfig.username,
   dbconfig.password,
   {
-    ssl: true,
+    ssl: node_env === "production",
     host: dbconfig.host,
     dialect: dbconfig.dialect,
     dialectOptions: {
-      ssl: true
+      ssl:
+        node_env === "production"
+          ? {
+              rejectUnauthorized: false,
+            }
+          : false,
     },
     logging: false,
-  },
+  }
 );
 
 module.exports = db;
