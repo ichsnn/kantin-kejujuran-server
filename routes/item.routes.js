@@ -29,6 +29,11 @@ itemRoutes.post(
   controller.buyItem
 );
 itemRoutes.get("/onsell", controller.onsell);
-itemRoutes.get("/onsell/:page", controller.onsellPage);
+itemRoutes.get("/onsell/latest", controller.onSellLatest);
+itemRoutes.get("/onsell/oldest", controller.onsellOldest);
+itemRoutes.get("/onsell/az", controller.onsellAZ);
+itemRoutes.get("/onsell/za", controller.onsellZA);
+itemRoutes.get("/onsell/low", controller.onSellLow);
+itemRoutes.get("/onsell/high", controller.onSellHigh);
 
 module.exports = itemRoutes;

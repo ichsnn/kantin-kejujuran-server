@@ -100,6 +100,66 @@ const onsell = async (req, res) => {
   res.json(ItemsOnSell);
 };
 
+const onSellLatest = async (req, res) => {
+  const ItemsOnSell = await Item.findAll({
+    where: {
+      sold: false,
+    },
+    order: [["createdAt", "DESC"]],
+  });
+  res.json(ItemsOnSell);
+}
+
+const onsellOldest = async (req, res) => {
+  const ItemsOnSell = await Item.findAll({
+    where: {
+      sold: false,
+    },
+    order: [["createdAt", "ASC"]],
+  });
+  res.json(ItemsOnSell);
+}
+
+const onsellAZ = async (req, res) => {
+  const ItemsOnSell = await Item.findAll({
+    where: {
+      sold: false,
+    },
+    order: [["name", "ASC"]],
+  });
+  res.json(ItemsOnSell);
+}
+
+const onsellZA = async (req, res) => {
+  const ItemsOnSell = await Item.findAll({
+    where: {
+      sold: false,
+    },
+    order: [["name", "DESC"]],
+  });
+  res.json(ItemsOnSell);
+}
+
+const onSellLow = async (req, res) => {
+  const ItemsOnSell = await Item.findAll({
+    where: {
+      sold: false,
+    },
+    order: [["price", "ASC"]],
+  });
+  res.json(ItemsOnSell);
+}
+
+const onSellHigh = async (req, res) => {
+  const ItemsOnSell = await Item.findAll({
+    where: {
+      sold: false,
+    },
+    order: [["price", "DESC"]],
+  });
+  res.json(ItemsOnSell);
+}
+
 const onsellPage = async (req, res) => {
   try {
     const page = Number.parseInt(req.params.page);
@@ -124,6 +184,12 @@ const onsellPage = async (req, res) => {
 module.exports = {
   sellItem,
   onsell,
+  onSellLatest,
+  onsellOldest,
+  onsellAZ,
+  onsellZA,
+  onSellLow,
+  onSellHigh,
   onsellPage,
   buyItem,
 };
