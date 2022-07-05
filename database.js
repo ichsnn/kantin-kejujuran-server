@@ -10,6 +10,9 @@ const db = new Sequelize(
     ssl: true,
     host: dbconfig.host,
     dialect: dbconfig.dialect,
+    dialectOptions: {
+      ssl: true
+    },
     logging: false,
   },
 );
