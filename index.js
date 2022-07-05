@@ -23,7 +23,7 @@ database
     console.log("Database synced");
   })
   .catch((err) => {
-    console.log("Error syncing database");
+    console.log(err);
   });
 
 app.listen(port, () => {
